@@ -17,7 +17,7 @@
   <header><h1>Painel de resultados NRK</h1><p>Explore e compare as análises ecológicas.</p></header>
   <main>
     <section class="controles">
-      <label>Tipo<select id="tipo"><option value="individual">Espécies × tempo — individual</option><option value="media">Espécies × tempo — média</option><option value="pop_nrk_individual">População × NRK — individual</option><option value="pop_nrk_media">População × NRK — média</option><option value="sar">SAR</option><option value="sad">SAD — modelo</option><option value="sad_conjunta">SAD — conjunta</option><option value="sad_lognormal">SAD — lognormal por NRK</option><option value="sad_7_bins">SAD — 7 bins</option><option value="sad_preston">SAD — Preston</option><option value="whittaker_classico">Whittaker — clássico</option><option value="whittaker_shift">Whittaker — shift</option><option value="whittaker_50_bins">Whittaker — 50 bins</option><option value="whittaker_histograma">Whittaker — histograma</option></select></label>
+      <label>Tipo<select id="tipo"><option value="individual">Espécies × tempo — individual</option><option value="media">Espécies × tempo — média</option><option value="pop_nrk_individual">População × NRK — individual</option><option value="pop_nrk_media">População × NRK — média</option><option value="sad_preston">SAD — Preston</option></select></label>
       <label data-ciclo>Ciclo<select id="ciclo"></select></label>
       <label>h<select id="h"></select></label>
       <label data-nrk>NRK<select id="nrk"></select></label>
@@ -40,16 +40,7 @@
       if(tipo.value==='media')return{titulo:`Média — h${H}`,arquivo:`MEDIAS/W4.0_h${H}_MEDIA.png`};
       if(tipo.value==='pop_nrk_individual')return{titulo:`População × NRK — ${ciclo.value}`,arquivo:`POP_X_NRK/INDIVIDUAIS/${ciclo.value}/populacao_x_NRK_W4.png`};
       if(tipo.value==='pop_nrk_media')return{titulo:'População × NRK — média',arquivo:'POP_X_NRK/MEDIAS/populacao_x_NRK_W4_MEDIA.png'};
-      if(tipo.value==='sar')return{titulo:`SAR — h${H}`,arquivo:`SAR/W4.0_h${H}_SAR_MODELO.png`};
-      if(tipo.value==='sad')return{titulo:`SAD — modelo — h${H}`,arquivo:`SAD/W4.0_h${H}_SAD_MODELO.png`};
-      if(tipo.value==='sad_conjunta')return{titulo:`SAD — conjunta — h${H}`,arquivo:`SAD/W4.0_h${H}_SAD_CONJUNTA.png`};
-      if(tipo.value==='sad_lognormal')return{titulo:`SAD — lognormal — h${H} — NRK=${nrk.value}`,arquivo:`SAD/W4.0_h${H}_NRK${nrk.value}_SAD_LOGNORMAL.png`};
-      if(tipo.value==='sad_7_bins')return{titulo:`SAD — 7 bins — h${H}`,arquivo:`SAD_7_bins/W4.0_h${H}_SAD_7_BINS_SHIFT.png`};
-      if(tipo.value==='sad_preston')return{titulo:`SAD — Preston — h${H}`,arquivo:`SAD_PRESTON/W4.0_h${H}_SAD_PRESTON.png`};
-      if(tipo.value==='whittaker_classico')return{titulo:`Whittaker — clássico — h${H}`,arquivo:`Whittaker/W4.0_h${H}_WHITTAKER_CLASSICO.png`};
-      if(tipo.value==='whittaker_shift')return{titulo:`Whittaker — shift — h${H}`,arquivo:`Whittaker/W4.0_h${H}_WHITTAKER_SHIFT.png`};
-      if(tipo.value==='whittaker_50_bins')return{titulo:`Whittaker — 50 bins — h${H}`,arquivo:`Whittaker/W4.0_h${H}_WHITTAKER_50_BINS.png`};
-      return{titulo:`Whittaker — histograma — h${H}`,arquivo:`Whittaker/W4.0_h${H}_WHITTAKER_50_BINS_HISTOGRAMA.png`};
+      return{titulo:`SAD — Preston — h${H}`,arquivo:`SAD_PRESTON/W4.0_h${H}_SAD_PRESTON.png`};
     }
     function vazio(){if(!galeria.querySelector('.cartao'))galeria.innerHTML='<div class="vazio">Escolha os parâmetros e adicione uma figura.</div>'}
     function adicionar(){const x=item();galeria.querySelector('.vazio')?.remove();if(galeria.querySelector(`[data-arquivo="${x.arquivo}"]`))return;const card=document.createElement('article');card.className='cartao';card.dataset.arquivo=x.arquivo;const titulo=document.createElement('h2');titulo.textContent=x.titulo;const img=document.createElement('img');img.src=x.arquivo;img.alt=x.titulo;img.loading='lazy';img.onerror=()=>{img.replaceWith(Object.assign(document.createElement('div'),{className:'erro',textContent:'Figura não disponível para esta combinação.'}))};const acoes=document.createElement('div');acoes.className='acoes';const abrir=document.createElement('a');abrir.href=x.arquivo;abrir.target='_blank';abrir.textContent='Abrir separadamente';const remover=document.createElement('button');remover.type='button';remover.textContent='Remover';remover.onclick=()=>{card.remove();vazio()};acoes.append(abrir,remover);card.append(titulo,img,acoes);galeria.append(card)}
