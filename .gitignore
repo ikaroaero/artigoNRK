@@ -1,0 +1,6 @@
+# Resultados brutos e duplicados não publicados no GitHub Pages
+resultados/ciclo_*/
+
+# Dados auxiliares que não são exibidos no painel
+resultados/POP_X_NRK/*.csv
+resultados/SAD_PRESTON/*.csv
