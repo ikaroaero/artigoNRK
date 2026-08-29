@@ -7,3 +7,11 @@ resultados/SAD_PRESTON/*.csv
 
 # Análises antigas que não existem mais na pasta de resultados atual
 resultados/SAD/
+
+# Figuras preservadas localmente, mas removidas do GitHub Pages
+resultados/INDIVIDUAIS/
+resultados/POP_X_NRK/INDIVIDUAIS/
+resultados/COMPARACAO_SAD/
+resultados/SAD_7_bins/
+resultados/SAR/
+resultados/Whittaker/
