@@ -6,7 +6,4 @@ resultados/POP_X_NRK/*.csv
 resultados/SAD_PRESTON/*.csv
 
 # Análises antigas que não existem mais na pasta de resultados atual
-resultados/SAR/
 resultados/SAD/
-resultados/SAD_7_bins/
-resultados/Whittaker/
