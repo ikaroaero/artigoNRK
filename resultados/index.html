@@ -17,6 +17,7 @@
   <header><h1>Painel de resultados NRK</h1><p>Explore e compare as análises ecológicas.</p></header>
   <main>
     <section class="controles">
+      <label>Conjunto<select id="conjunto"><option value="principal">Principal — W4.0</option><option value="maquina58">Máquina 58 — W3.0</option></select></label>
       <label>Tipo<select id="tipo"><option value="media">Espécies × tempo — média</option><option value="pop_nrk_media">População × NRK — média</option><option value="sad_preston">SAD — Preston</option></select></label>
       <label>h<select id="h"></select></label>
       <button id="adicionar" type="button">+ Adicionar à comparação</button><button id="limpar" type="button">Limpar comparação</button>
@@ -24,17 +25,18 @@
     <section id="galeria" class="galeria"><div class="vazio">Escolha os parâmetros e adicione uma figura.</div></section>
   </main>
   <script>
-    const $=s=>document.querySelector(s), tipo=$('#tipo'), h=$('#h'), galeria=$('#galeria');
+    const $=s=>document.querySelector(s), conjunto=$('#conjunto'), tipo=$('#tipo'), h=$('#h'), galeria=$('#galeria');
     const preencher=(el,valores)=>el.replaceChildren(...valores.map(v=>new Option(v,v)));
     preencher(h,['0.01','0.50','0.99']);
     function atualizar(){
       h.closest('label').hidden=tipo.value==='pop_nrk_media';
     }
     function item(){
-      const H=h.value;
-      if(tipo.value==='media')return{titulo:`Média — h${H}`,arquivo:`MEDIAS/W4.0_h${H}_MEDIA.png`};
-      if(tipo.value==='pop_nrk_media')return{titulo:'População × NRK — média',arquivo:'POP_X_NRK/MEDIAS/populacao_x_NRK_W4_MEDIA.png'};
-      return{titulo:`SAD — Preston — h${H}`,arquivo:`SAD_PRESTON/W4.0_h${H}_SAD_PRESTON.png`};
+      const H=h.value, importado=conjunto.value==='maquina58', W=importado?'W3.0':'W4.0', prefixo=importado?'importados_maquina58/':'';
+      const origem=importado?'Máquina 58 — W3.0':'Principal — W4.0';
+      if(tipo.value==='media')return{titulo:`${origem} — Média — h${H}`,arquivo:`${prefixo}MEDIAS/${W}_h${H}_MEDIA.png`};
+      if(tipo.value==='pop_nrk_media')return{titulo:`${origem} — População × NRK — média`,arquivo:`${prefixo}POP_X_NRK/MEDIAS/populacao_x_NRK_${importado?'W3':'W4'}_MEDIA.png`};
+      return{titulo:`${origem} — SAD Preston — h${H}`,arquivo:`${prefixo}SAD_PRESTON/${W}_h${H}_SAD_PRESTON.png`};
     }
     function vazio(){if(!galeria.querySelector('.cartao'))galeria.innerHTML='<div class="vazio">Escolha os parâmetros e adicione uma figura.</div>'}
     function adicionar(){const x=item();galeria.querySelector('.vazio')?.remove();if(galeria.querySelector(`[data-arquivo="${x.arquivo}"]`))return;const card=document.createElement('article');card.className='cartao';card.dataset.arquivo=x.arquivo;const titulo=document.createElement('h2');titulo.textContent=x.titulo;const img=document.createElement('img');img.src=x.arquivo;img.alt=x.titulo;img.loading='lazy';img.onerror=()=>{img.replaceWith(Object.assign(document.createElement('div'),{className:'erro',textContent:'Figura não disponível para esta combinação.'}))};const acoes=document.createElement('div');acoes.className='acoes';const abrir=document.createElement('a');abrir.href=x.arquivo;abrir.target='_blank';abrir.textContent='Abrir separadamente';const remover=document.createElement('button');remover.type='button';remover.textContent='Remover';remover.onclick=()=>{card.remove();vazio()};acoes.append(abrir,remover);card.append(titulo,img,acoes);galeria.append(card)}
