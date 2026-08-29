@@ -30,8 +30,7 @@
     preencher(h,['0.01','0.50','0.99']);
     const tiposBase=[['media','Espécies × tempo — média'],['pop_nrk_media','População × NRK — média'],['sad_preston','SAD — Preston'],['sar_curvas','SAR — curvas'],['sar_expoentes','SAR — expoentes']];
     function atualizarTipos(){
-      const tipos=conjunto.value==='principal'?[...tiposBase,['sar_modelo','SAR — modelo']]:tiposBase;
-      tipo.replaceChildren(...tipos.map(([valor,texto])=>new Option(texto,valor)));
+      tipo.replaceChildren(...tiposBase.map(([valor,texto])=>new Option(texto,valor)));
       atualizar();
     }
     function atualizar(){
@@ -44,8 +43,7 @@
       if(tipo.value==='pop_nrk_media')return{titulo:`${origem} — População × NRK — média`,arquivo:`${prefixo}POP_X_NRK/MEDIAS/populacao_x_NRK_${importado?'W3':'W4'}_MEDIA.png`};
       if(tipo.value==='sad_preston')return{titulo:`${origem} — SAD Preston — h${H}`,arquivo:`${prefixo}SAD_PRESTON/${W}_h${H}_SAD_PRESTON.png`};
       if(tipo.value==='sar_curvas')return{titulo:`${origem} — SAR — curvas`,arquivo:`${prefixo}SAR/${W}_SAR_CURVAS_PAINEL.png`};
-      if(tipo.value==='sar_expoentes')return{titulo:`${origem} — SAR — expoentes`,arquivo:`${prefixo}SAR/${W}_SAR_EXPOENTES_PAINEL.png`};
-      return{titulo:`${origem} — SAR — modelo — h${H}`,arquivo:`SAR/W4.0_h${H}_SAR_MODELO.png`};
+      return{titulo:`${origem} — SAR — expoentes`,arquivo:`${prefixo}SAR/${W}_SAR_EXPOENTES_PAINEL.png`};
     }
     function vazio(){if(!galeria.querySelector('.cartao'))galeria.innerHTML='<div class="vazio">Escolha os parâmetros e adicione uma figura.</div>'}
     function adicionar(){const x=item();galeria.querySelector('.vazio')?.remove();if(galeria.querySelector(`[data-arquivo="${x.arquivo}"]`))return;const card=document.createElement('article');card.className='cartao';card.dataset.arquivo=x.arquivo;const titulo=document.createElement('h2');titulo.textContent=x.titulo;const img=document.createElement('img');img.src=x.arquivo;img.alt=x.titulo;img.loading='lazy';img.onerror=()=>{img.replaceWith(Object.assign(document.createElement('div'),{className:'erro',textContent:'Figura não disponível para esta combinação.'}))};const acoes=document.createElement('div');acoes.className='acoes';const abrir=document.createElement('a');abrir.href=x.arquivo;abrir.target='_blank';abrir.textContent='Abrir separadamente';const remover=document.createElement('button');remover.type='button';remover.textContent='Remover';remover.onclick=()=>{card.remove();vazio()};acoes.append(abrir,remover);card.append(titulo,img,acoes);galeria.append(card)}
