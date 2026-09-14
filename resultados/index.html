@@ -34,15 +34,15 @@
       atualizar();
     }
     function atualizar(){
-      h.closest('label').hidden=['pop_nrk_media','sar_curvas','sar_expoentes'].includes(tipo.value);
+      h.closest('label').hidden=['pop_nrk_media','sar_expoentes'].includes(tipo.value);
     }
     function item(){
       const H=h.value, importado=conjunto.value==='maquina58', W=importado?'W3.0':'W4.0', prefixo=importado?'importados_maquina58/':'';
       const origem=importado?'Máquina 58 — W3.0':'Principal — W4.0';
-      if(tipo.value==='media')return{titulo:`${origem} — Média — h${H}`,arquivo:`${prefixo}MEDIAS/${W}_h${H}_MEDIA.png`};
+      if(tipo.value==='media')return{titulo:`${origem} — Média — H=${H}`,arquivo:`${prefixo}MEDIAS/${W}_h${H}_MEDIA.png`};
       if(tipo.value==='pop_nrk_media')return{titulo:`${origem} — População × NRK — média`,arquivo:`${prefixo}POP_X_NRK/MEDIAS/populacao_x_NRK_${importado?'W3':'W4'}_MEDIA.png`};
-      if(tipo.value==='sad_preston')return{titulo:`${origem} — SAD Preston — h${H}`,arquivo:`${prefixo}SAD_PRESTON/${W}_h${H}_SAD_PRESTON.png`};
-      if(tipo.value==='sar_curvas')return{titulo:`${origem} — SAR — curvas`,arquivo:`${prefixo}SAR/${W}_SAR_CURVAS_PAINEL.png`};
+      if(tipo.value==='sad_preston')return{titulo:`${origem} — SAD Preston — H=${H}`,arquivo:`${prefixo}SAD_PRESTON/${W}_h${H}_SAD_PRESTON.png`};
+      if(tipo.value==='sar_curvas')return{titulo:`${origem} — SAR — curvas — H=${H}`,arquivo:`${prefixo}SAR/${W}_h${H}_SAR_CURVAS.png`};
       return{titulo:`${origem} — SAR — expoentes`,arquivo:`${prefixo}SAR/${W}_SAR_EXPOENTES_PAINEL.png`};
     }
     function vazio(){if(!galeria.querySelector('.cartao'))galeria.innerHTML='<div class="vazio">Escolha os parâmetros e adicione uma figura.</div>'}
