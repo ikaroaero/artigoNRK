@@ -2,8 +2,7 @@ import os
 import glob
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
-from estilo_graficos import cor_n, curva_suave
+from estilo_graficos import cor_h, curva_suave, tons_h
 
 # =========================
 # CONFIGURAÇÕES
@@ -74,11 +73,14 @@ def gerar_curva_individual(caminho):
 
     pasta = os.path.dirname(caminho)
     configuracao = os.path.relpath(pasta, BASE_DIR)
+    pasta_h = os.path.dirname(pasta)
+    H = os.path.basename(pasta_h).removeprefix("h")
+    cor = cor_h(H)
 
     plt.figure(figsize=(10, 7), dpi=150)
     ts, ns = curva_suave(t, n)
-    plt.plot(ts, ns, color=cor_n(os.path.basename(pasta).replace("NRK=", "")), linewidth=1.8)
-    plt.plot(t, n, "o", color=cor_n(os.path.basename(pasta).replace("NRK=", "")), markersize=2.5)
+    plt.plot(ts, ns, color=cor, linewidth=1.8)
+    plt.plot(t, n, "o", color=cor, markersize=2.5)
     plt.xlabel("Time")
     plt.ylabel("S")
     plt.grid(False)
@@ -156,8 +158,10 @@ for W, H, NRKs in configuracoes:
     print(f"\n📊 Processando médias para W={W} | h={H}")
 
     plt.figure(figsize=(10, 7), dpi=150)
+    cores = tons_h(H, len(NRKs))
 
     for idx, NRK in enumerate(NRKs):
+        cor = cores[idx]
 
         series = []
         t_ref = None
@@ -200,17 +204,17 @@ for W, H, NRKs in configuracoes:
         plt.plot(
             ts,
             medias,
-            color=cor_n(NRK),
+            color=cor,
             linewidth=1.8,
             label=rf"$n_r={NRK}$"
         )
-        plt.plot(t_plot, media, "o", color=cor_n(NRK), markersize=2.2)
+        plt.plot(t_plot, media, "o", color=cor, markersize=2.2)
 
         plt.fill_between(
             ts,
             medias - desvios,
             medias + desvios,
-            color=cor_n(NRK),
+            color=cor,
             alpha=0.25
         )
 

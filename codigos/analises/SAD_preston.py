@@ -97,8 +97,8 @@ def gerar(W,H,ns,ciclos,registros):
 
     ax.set_xticks(xticks); ax.set_xticklabels(xlabels,rotation=55,ha="right",fontsize=8)
     ax.set_xlim(0,shift+1); ax.set_ylim(bottom=0)
-    ax.set_xlabel(r"$\log_2(N)$")
-    ax.set_ylabel(r"$S$")
+    ax.set_xlabel(r"$\log_2(n)$")
+    ax.set_ylabel(r"$S(n)$")
     ax.legend(handles=handles,loc="upper center",bbox_to_anchor=(.5,-.27),
               ncol=len(handles),frameon=False)
     ax.grid(False); fig.subplots_adjust(bottom=.38,top=.96,left=.07,right=.99)
